@@ -1,15 +1,15 @@
 Package: BrandLift
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: A Bootstrap Proportion Test for Brand Lift Testing
+Version: 0.1.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person(given="Wanjun", family="Liu", email="waliu@linkedin.com", role = c("aut", "cre"))
+Description: A bootstrap proportion test for Brand Lift Testing to quantify the effectiveness of online advertising. The details of the bootstrap proportion test can be found in
+    Liu, Yu, Mao, Wu, Dyer (2023) <doi:10.1145/3583780.3615021>.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 NeedsCompilation: no
 Packaged: 2023-08-08 01:23:26 UTC; xyu24
-Author: First Last [aut, cre] (YOUR-ORCID-ID)
-Maintainer: First Last <first.last@example.com>
+Author: Wanjun Liu [aut, cre]
+Maintainer: Wanjun Liu <waliu@linkedin.com>

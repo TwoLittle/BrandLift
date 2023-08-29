@@ -8,9 +8,9 @@
 #' \item \eqn{\mathbf{bootstrap}}: Absolute lift based bootstrap test (BS-A) and relative lift based 
 #' bootstrap test (BS-R), see Liu et al., (2023).
 #' \item \eqn{\mathbf{bootstrapmean}}: Absolute lift based bootstrap mean test and relative lift 
-#' based bootstrap mean test.
+#' based bootstrap mean test. (Efron and Tibshirani 1994).
 #' \item \eqn{\mathbf{permutation}}: Absolute lift based permutation test and relative lift based 
-#' permutation test.
+#' permutation test. (Efron and Tibshirani 1994).
 #' }
 #' Learn more about the proportion tests in the section Details.
 #' 
@@ -26,7 +26,7 @@
 #' 
 #' @return
 #' A list of absolute lift, relative lift, standardized absolute lift and their corresponding
-#' p-values. Standardized absolute lift equals absolute lift divided by its standard deviation
+#' p-values. Standardized absolute lift equals absolute lift divided by its standard deviation.
 #' Only absolute lift and relative lift are available for method clt.
 #' @details 
 #' \eqn{\mathbf{clt}}: the classic Z-test based on normal approximation. The absolute 
@@ -74,10 +74,6 @@
 #' result <- proportion.test(sim.data, method = 'bootstrap')
 #' relative.lift <- result$lift$relative
 #' relative.lift.pval <- result$pvalue$relative
-
-
-
-
 
 
 

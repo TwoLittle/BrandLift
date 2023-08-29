@@ -1,49 +1,31 @@
-# BrandLift: A Bootstrap Proportion Test for Brand Lift Testing to Quantify the Effectiveness of Advertising
+## fccc - functional concordance correlation coefficient
 
-We propose a new bootstrap test based on relative lift to test whether the means of two binomial distributions are the same or not. 
-We apply the proposed the boostrap test to a real product Brand Lift Testing at LinkedIn to quantify the effectiveness of online advertising.
-We developed an R package, namely BrandLift, and distributed it via Github. For more details and it applications, refer to the following papers
+Fccc, an abbreviation of functional concordance correlation coefficient, is a better method to quantify the correlation between TLFB and daily process data. We developed an R package, namely fccc, and distributed it via Github. For more details and it applications, refer to the following papers 
+  
+* Liu, W., Li, R., Zimmerman, M. A., Walton, M. A., Cunningham, R. M., & Buu, A. (2019). Statistical methods for evaluating the correlation between timeline follow-back data and daily process data with applications to research on alcohol and marijuana use. Addictive behaviors, 94, 147-155.
 
-> Wanjun Liu, Xiufan Yu, Jialiang Mao, Xiaoxu Wu, and Justin Dyer. 2023. Quantifying the Effectiveness of Advertising: A Bootstrap Proportion Test
-for Brand Lift Testing. In Proceedings of the 32nd ACM International Conference on Information and Knowledge Management (CIKM ’23).
-
+* Li, R., Chow, M. (2005). Evaluation of Reproducibility for Paired Functional Data. Journal of Multivariate Analysis, 93(1), 81-101. doi: 10.1016/j.jmva.2004.01.010.
+  
 To install the package, please use the following commands:
-```
-  devtools::install_github("TwoLittle/BrandLift")
-  library(BrandLift)
-```  
+  
+    >devtools::install_github("TwoLittle/fccc")
+    >library(fccc)
 The package includes an introduction about the functions that can be used to carry out the conventional and proposed methods, as well as a simple example that demonstrates the usage. To check out the introduction and example, please use the following commands:
-```
-  help(package = 'BrandLift')
-```
+
+    >help(package = 'fccc')
 There are two functions in the package:
-```
-gen.simu.data(n1, n2, p1, p2, summary=TRUE)
-```
-which generates binomial random samples for the control group (with sample size n1 and success probability p1) and the treatment group
-(with sample size n2 and success probability p2).
 
-```
-proportion.test(data, method = 'bootstrap', B = 1000)
-```
-which implements the bootstrap proportion test together with serveal other methods that can be applied to Brand Lift Testing. In partibular, 4 methods are provided:
-* `clt`: Absolute lift based Z-test and relative lift based Z-test. The limiting distribution of Z-statistics are derived from the central limit theorem.
-* `bootstrap`: Absolute lift based bootstrap test (BS-A) and relative lift based bootstrap test (BS-R), see Liu et al., (2023).
-* `bootstrapmean`: Absolute lift based bootstrap mean test and relative lift based bootstrap mean test. (Efron and Tibshirani 1994).
-* `permutation`: Absolute lift based permutation test and relative lift based permutation test. (Efron and Tibshirani 1994).
+    get.con.cor(X, Y) # calculates the conventional Pearson’s correlation coefficient and the conventional concordance correlation coefficient.
+    get.fun.cor(X, Y, W) # calculates the functional Pearson’s correlation coefficient and the functional concordance correlation coefficient.
+    
+The input data X and Y should be prepared in a matrix form with each row being a subject and each column being a time point. X and Y should be of the same size. **Missing values should be coded as NaN**. The function, get.fun.cor(X, Y, W), also allows the user to specify the weight function, W, based on the research context. If the user does not specify the weight function W, get.fun.cor uses equal weights for each time point by default. For example, 
+        
+    >x <- matrix(norm(12), 3, 4)
+    >y <- matrix(norm(12), 3, 4)
+    >get.fun.cor(x, y)
+  
+Without the weight function, get.fun.cor(x, y)assumes equal weights, which produce exactly the same result as
 
-### How to use
-```
-n1 <- 100
-n2 <- 100
-p1 <- 0.1
-p2 <- 0.2
-set.seed(1)
-# generate simulated data
-sim.data <- gen.simu.data(n1, n2, p1, p2)
-sim.data
-# run the proportion test using method bootstrap
-result <- proportion.test(sim.data, method = 'bootstrap')
-relative.lift <- result$lift$relative
-relative.lift.pval <- result$pvalue$relative
-```
+    >w <- matrix(1, 3, 4) # equal weight
+    >get.fun.cor(x, y, w)
+One can also assign different weights to different time points.
