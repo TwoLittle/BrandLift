@@ -16,12 +16,12 @@
 #' 
 #' @import stats
 #' @usage
-#' proportion.test(data, method = 'bootstrap', B = 1000)
-#' @param data: A 2x2 matrix with first column being (control sample size, treatment sample size)
+#' proportion.test(data, method, B)
+#' @param data A 2x2 matrix with first column being (control sample size, treatment sample size)
 #' and the 2nd column being (control positive response count, treatment positive response count).
-#' @param method: The method should be one of ("clt", "bootstrap", 
+#' @param method The method should be one of ("clt", "bootstrap", 
 #' "bootstrapmean", "permutation")
-#' @param B: Number of replications for bootstrap test or permutation test.
+#' @param B Number of replications for bootstrap test or permutation test.
 #' Only required for methods "bootstrap", "bootstrapmean", "permutation".
 #' 
 #' @return
@@ -71,7 +71,7 @@
 #' n1 <- 100; n2 <- 100; p1 <- 0.1; p2 <- 0.2
 #' set.seed(1)
 #' sim.data <- gen.simu.data(n1, n2, p1, p2, summary = TRUE)
-#' result <- proportion.test(sim.data, method = 'bootstrap')
+#' result <- proportion.test(sim.data, method = "bootstrap", B = 1000)
 #' relative.lift <- result$lift$relative
 #' relative.lift.pval <- result$pvalue$relative
 
