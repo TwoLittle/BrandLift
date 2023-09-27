@@ -7,15 +7,15 @@
 gen.simu.data(n1, n2, p1, p2, summary=TRUE)
 }
 \arguments{
-\item{n1:}{sample size of the control group}
+\item{n1}{sample size of the control group}
 
-\item{n2:}{sample size of the treatment group}
+\item{n2}{sample size of the treatment group}
 
-\item{p1:}{success probability of the control group}
+\item{p1}{success probability of the control group}
 
-\item{p2:}{success probability of the treatment group}
+\item{p2}{success probability of the treatment group}
 
-\item{summary:}{boolean variable. if TRUE it returns 2x2 contingency table; if FALSE it returns raw binomial random samples.
+\item{summary}{boolean variable. if TRUE it returns 2x2 contingency table; if FALSE it returns raw binomial random samples.
 By default, summary=TRUE.}
 }
 \value{

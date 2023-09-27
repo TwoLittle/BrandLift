@@ -4,16 +4,16 @@
 \alias{proportion.test}
 \title{A Bootstrap Proportion Test for Brand Lift Testing (Liu et al., 2023)}
 \usage{
-proportion.test(data, method = 'bootstrap', B = 1000)
+proportion.test(data, method, B)
 }
 \arguments{
-\item{data:}{A 2x2 matrix with first column being (control sample size, treatment sample size)
+\item{data}{A 2x2 matrix with first column being (control sample size, treatment sample size)
 and the 2nd column being (control positive response count, treatment positive response count).}
 
-\item{method:}{The method should be one of ("clt", "bootstrap",
+\item{method}{The method should be one of ("clt", "bootstrap",
 "bootstrapmean", "permutation")}
 
-\item{B:}{Number of replications for bootstrap test or permutation test.
+\item{B}{Number of replications for bootstrap test or permutation test.
 Only required for methods "bootstrap", "bootstrapmean", "permutation".}
 }
 \value{
@@ -70,7 +70,7 @@ See Algorithm 15.1 of Efron and Tibshirani (1994).
 n1 <- 100; n2 <- 100; p1 <- 0.1; p2 <- 0.2
 set.seed(1)
 sim.data <- gen.simu.data(n1, n2, p1, p2, summary = TRUE)
-result <- proportion.test(sim.data, method = 'bootstrap')
+result <- proportion.test(sim.data, method = "bootstrap", B = 1000)
 relative.lift <- result$lift$relative
 relative.lift.pval <- result$pvalue$relative
 }
