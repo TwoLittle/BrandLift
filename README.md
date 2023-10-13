@@ -61,7 +61,7 @@ sim.data <- gen.simu.data(n1, n2, p1, p2)
 sim.data
 
 # run the proportion test using method bootstrap
-result <- proportion.test(sim.data, method = 'bootstrap')
+result <- proportion.test(sim.data, method = 'bootstrap', B = 1000)
 relative.lift <- result$lift$relative
 relative.lift.pval <- result$pvalue$relative
 
@@ -73,26 +73,62 @@ get.min.size(p1, p2, p_treat=0.5, method='relative', power=0.8, alpha=0.05)
 ```
 
 ### Unit test
-The asymptotic power should be 0.05 when `p1=p2`
+We utilize the R package `testthat` to perform the unit test, which is the official/recommended approach to test a new R package.
+We implemented 6 test cases and all of them pass the unit tests.
 ```
+# load parameters
 n1 <- 100
 n2 <- 100
 p1 <- 0.1
-p2 <- 0.1
-get.asymp.power(n1, n2, p1, p2, method='absolute')
-# output: 0.05
-get.asymp.power(n1, n2, p1, p2, method='relative')
-# output: 0.05
+p2 <- 0.2
+set.seed(1)
+
+# generate simulated data
+sim.data <- gen.simu.data(n1, n2, p1, p2)
+# run the proportion test using method bootstrap
+result <- proportion.test(sim.data, method = 'bootstrap', B=1000)
+relative.lift <- result$lift$relative
+relative.lift.pval <- result$pvalue$relative
 ```
 
-The asymptotic power should be 1 when `n1` and `n2` are large and `p1 != p2`
+* the asymptotic power under null is 0.05
 ```
-n1 <- 2000
-n2 <- 2000
-p1 <- 0.1
-p2 <- 0.2
-get.asymp.power(n1, n2, p1, p2, method='absolute')
-# output: 1.00
-get.asymp.power(n1, n2, p1, p2, method='relative')
-# output: 1.00
+test_that("the asymptotic power under null is 0.05", {
+  expect_equal(get.asymp.power(100, 100, 0.1, 0.1, 'relative'), 0.05)
+}) #Output = 0.05, Pass
+```
+
+* the asymptotic power under alternative is 1 when sample size is large
+```
+test_that("the asymptotic power under H1 is 1 when sample size is large", {
+  expect_equal(get.asymp.power(2000, 2000, 0.1, 0.2, 'relative'), 1.0)
+}) #Output = 1.0, Pass
+```
+
+* the summarized the simulation data should be 2x2 matrix
+```
+test_that("the summarized the simulation data should be 2x2 matrix", {
+  expect_equal(dim(gen.simu.data(100, 100, 0.1, 0.2)), c(2, 2))
+}) #Output = c(2,2), Pass
+```
+
+* the min sample size is infinity under null hypothesis
+```
+test_that("the min sample size is infinity under null hypothesis", {
+  expect_equal(get.min.size(0.1, 0.1, 0.5, 'relative', 0.8, 0.05), Inf)
+}) #Output = Inf, Pass
+```
+
+* the p-value should be <= 1
+```
+test_that("the p-value should be <= 1", {
+  expect_lt(relative.lift.pval, 1)
+}) #Output = 0.009, Pass
+```
+
+* the p-value should be >= 0
+```
+test_that("the p-value should be >= 0", {
+  expect_gt(relative.lift.pval, 0)
+}) #Output = 0.009, Pass
 ```
